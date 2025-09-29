@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniMaterials - Thị trường tài liệu đại học</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            color: var(--warning);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Auth Section */
+        .auth-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* User Info */
+        .user-info {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .user-info.active {
+            display: block;
+        }
+
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .balance-section {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .balance-amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--success);
+            margin: 0.5rem 0;
+        }
+
+        /* Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .category-content {
+            padding: 1.5rem;
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .category-desc {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .subject-count {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Subjects */
+        .subjects-container {
+            display: none;
+            margin-bottom: 2rem;
+        }
+
+        .subjects-container.active {
+            display: block;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-header {
+            padding: 1rem;
+            background: var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .subject-price {
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .subject-body {
+            padding: 1rem;
+        }
+
+        .subject-description {
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        .subject-seller {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Sell Document Form */
+        .sell-form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .sell-form-container.active {
+            display: block;
+        }
+
+        /* QR Code Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-title {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .qr-code {
+            margin: 1rem 0;
+            border: 1px solid var(--light);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .commission-note {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-title {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>UniMaterials</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-section="home">Trang chủ</a></li>
+                        <li><a href="#" class="nav-link" data-section="categories">Danh mục</a></li>
+                        <li><a href="#" class="nav-link" data-section="sell">Bán tài liệu</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <button id="loginBtn" class="btn btn-primary">Đăng nhập</button>
+                    <button id="registerBtn" class="btn btn-secondary">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Authentication Section -->
+        <section id="authSection" class="auth-section">
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Đăng nhập</button>
+                <button class="auth-tab" data-tab="register">Đăng ký</button>
+            </div>
+            
+            <div class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Tên đăng nhập</label>
+                    <input type="text" id="loginUsername" placeholder="Nhập tên đăng nhập">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mật khẩu</label>
+                    <input type="password" id="loginPassword" placeholder="Nhập mật khẩu">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="login()">Đăng nhập</button>
+                <div id="loginError" class="error mt-1"></div>
+            </div>
+            
+            <div class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">Tên đăng nhập</label>
+                    <input type="text" id="registerUsername" placeholder="Nhập tên đăng nhập">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Mật khẩu</label>
+                    <input type="password" id="registerPassword" placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" placeholder="Nhập email">
+                </div>
+                <div class="form-group">
+                    <label for="registerFullName">Họ và tên</label>
+                    <input type="text" id="registerFullName" placeholder="Nhập họ và tên">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="register()">Đăng ký</button>
+                <div id="registerError" class="error mt-1"></div>
+            </div>
+        </section>
+
+        <!-- User Info Section -->
+        <section id="userInfo" class="user-info">
+            <div class="user-header">
+                <h2>Chào mừng, <span id="userDisplayName"></span>!</h2>
+                <button class="btn btn-danger" onclick="logout()">Đăng xuất</button>
+            </div>
+            <p>Email: <span id="userEmail"></span></p>
+            <div class="balance-section">
+                <h3>Số dư tài khoản</h3>
+                <div class="balance-amount" id="balanceAmount">0 VNĐ</div>
+                <button class="btn btn-success" onclick="showDepositModal()">Nạp tiền vào tài khoản</button>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categoriesSection">
+            <h2 class="section-title">Danh mục môn học</h2>
+            <div class="categories">
+                <div class="category-card" data-category="philosophy">
+                    <div class="category-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Triết học</h3>
+                        <p class="category-desc">Các môn học về tư duy, logic và triết lý</p>
+                        <div class="subject-count">1 môn học</div>
+                    </div>
+                </div>
+                
+                <div class="category-card" data-category="economics">
+                    <div class="category-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Kinh tế</h3>
+                        <p class="category-desc">Các môn học về kinh tế và quản lý</p>
+                        <div class="subject-count">0 môn học</div>
+                    </div>
+                </div>
+                
+                <div class="category-card" data-category="science">
+                    <div class="category-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Khoa học</h3>
+                        <p class="category-desc">Các môn học khoa học cơ bản và ứng dụng</p>
+                        <div class="subject-count">0 môn học</div>
+                    </div>
+                </div>
+                
+                <div class="category-card" data-category="engineering">
+                    <div class="category-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Kỹ thuật</h3>
+                        <p class="category-desc">Các môn học kỹ thuật và công nghệ</p>
+                        <div class="subject-count">0 môn học</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subjects Section -->
+        <section id="subjectsContainer" class="subjects-container">
+            <h2 class="section-title" id="subjectsTitle">Môn học</h2>
+            <button class="btn btn-secondary mb-2" onclick="backToCategories()">
+                <i class="fas fa-arrow-left"></i> Quay lại danh mục
+            </button>
+            <div class="subjects-grid" id="subjectsGrid">
+                <!-- Subjects will be loaded here dynamically -->
+            </div>
+        </section>
+
+        <!-- Sell Document Form -->
+        <section id="sellFormContainer" class="sell-form-container">
+            <h2 class="section-title">Đăng bán tài liệu</h2>
+            <div class="form-group">
+                <label for="docSubject">Chọn môn học</label>
+                <select id="docSubject">
+                    <option value="">-- Chọn môn học --</option>
+                    <option value="Marx Lenin">Marx Lenin</option>
+                    <!-- More subjects will be added dynamically -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="docTitle">Tiêu đề tài liệu</label>
+                <input type="text" id="docTitle" placeholder="Nhập tiêu đề tài liệu">
+            </div>
+            <div class="form-group">
+                <label for="docDescription">Mô tả tài liệu</label>
+                <textarea id="docDescription" rows="4" placeholder="Mô tả chi tiết về tài liệu"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="docPrice">Giá bán (VNĐ)</label>
+                <input type="number" id="docPrice" placeholder="Nhập giá bán">
+            </div>
+            <div class="form-group">
+                <label for="docFile">Tải lên tài liệu</label>
+                <input type="file" id="docFile">
+            </div>
+            <div class="commission-note">
+                <p><strong>Lưu ý:</strong> Chúng tôi thu 10% phí dịch vụ trên mỗi giao dịch. Bạn sẽ nhận được 90% giá bán.</p>
+            </div>
+            <button class="btn btn-success" onclick="submitDocument()">Đăng bán tài liệu</button>
+            <div id="sellError" class="error mt-1"></div>
+        </section>
+
+                <!-- Deposit Modal -->
+        <div id="depositModal" class="modal">
+            <div class="modal-content">
+                <h3 class="modal-title">Nạp tiền vào tài khoản</h3>
+                <div class="form-group">
+                    <label for="depositAmount">Số tiền cần nạp (VNĐ)</label>
+                    <input type="number" id="depositAmount" placeholder="Nhập số tiền">
+                </div>
+                <button class="btn btn-success" onclick="generateDepositQR()">Tạo mã QR nạp tiền</button>
+                <div id="depositQR" class="qr-code mt-2 hidden">
+                    <h4>Quét mã QR để nạp tiền</h4>
+                    <div style="max-width: 250px; margin: 0 auto;">
+                        <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: auto;">
+                    </div>
+                    <p class="mt-1">Sau khi chuyển khoản, số dư sẽ được cập nhật tự động.</p>
+                    <button class="btn btn-primary mt-1" onclick="simulateDeposit()">Mô phỏng đã nạp tiền</button>
+                </div>
+                <div id="depositError" class="error mt-1"></div>
+                <button class="btn btn-secondary mt-2" onclick="closeDepositModal()">Đóng</button>
+            </div>
+        </div>
+
+        <!-- Purchase Modal -->
+        <div id="purchaseModal" class="modal">
+            <div class="modal-content">
+                <h3 class="modal-title">Mua tài liệu</h3>
+                <div id="purchaseInfo"></div>
+                <div class="commission-note">
+                    <p><strong>Lưu ý:</strong> Chúng tôi thu 10% phí dịch vụ trên mỗi giao dịch. Người bán sẽ nhận được 90% giá bán.</p>
+                </div>
+                <button class="btn btn-success mt-1" onclick="confirmPurchase()">Xác nhận mua</button>
+                <button class="btn btn-secondary mt-1" onclick="closePurchaseModal()">Hủy</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">UniMaterials</h3>
+                    <p>Nền tảng mua bán tài liệu đại học hàng đầu Việt Nam. Kết nối sinh viên với nguồn tài liệu chất lượng.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Liên kết nhanh</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Danh mục</a></li>
+                        <li><a href="#">Bán tài liệu</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Hỗ trợ</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                        <li><a href="#">Hướng dẫn sử dụng</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Điều khoản dịch vụ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Liên hệ</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> support@unimaterials.vn</li>
+                        <li><i class="fas fa-phone"></i> 0901 234 567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận 1, TP.HCM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 UniMaterials. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data management
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('uniMaterialsUsers')) || [];
+        let subjects = JSON.parse(localStorage.getItem('uniMaterialsSubjects')) || [
+            {
+                id: 1,
+                name: "Marx Lenin",
+                category: "philosophy",
+                price: 39000,
+                description: "Tài liệu tổng hợp đầy đủ kiến thức môn Marx Lenin, bao gồm lý thuyết và bài tập thực hành.",
+                seller: "admin",
+                file: "marx_lenin.pdf"
+            }
+        ];
+        let documents = JSON.parse(localStorage.getItem('uniMaterialsDocuments')) || [];
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showUserInterface();
+            }
+
+            // Set up navigation
+            setupNavigation();
+            
+            // Set up auth tabs
+            setupAuthTabs();
+            
+            // Load categories
+            loadCategories();
+        });
+
+        // Navigation
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    
+                    // Update active nav link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show the corresponding section
+                    showSection(section);
+                });
+            });
+        }
+
+        function showSection(section) {
+            // Hide all sections
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('categoriesSection').style.display = 'none';
+            document.getElementById('subjectsContainer').classList.remove('active');
+            document.getElementById('sellFormContainer').classList.remove('active');
+            
+            // Show the selected section
+            if (section === 'home' || section === 'categories') {
+                document.getElementById('categoriesSection').style.display = 'block';
+            } else if (section === 'sell') {
+                if (currentUser) {
+                    document.getElementById('sellFormContainer').classList.add('active');
+                } else {
+                    document.getElementById('authSection').style.display = 'block';
+                    alert('Vui lòng đăng nhập để đăng bán tài liệu!');
+                }
+            }
+        }
+
+        // Authentication
+        function setupAuthTabs() {
+            const authTabs = document.querySelectorAll('.auth-tab');
+            authTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    authTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show the corresponding form
+                    document.querySelectorAll('.auth-form').forEach(form => {
+                        form.classList.remove('active');
+                    });
+                    document.getElementById(tabName + 'Form').classList.add('active');
+                });
+            });
+        }
+
+        function register() {
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const email = document.getElementById('registerEmail').value;
+            const fullName = document.getElementById('registerFullName').value;
+            const errorDiv = document.getElementById('registerError');
+            
+            errorDiv.textContent = '';
+            
+            // Validation
+            if (!username || !password || !email || !fullName) {
+                errorDiv.textContent = 'Vui lòng điền đầy đủ thông tin';
+                return;
+            }
+            
+            if (password.length < 6) {
+                errorDiv.textContent = 'Mật khẩu phải có ít nhất 6 ký tự';
+                return;
+            }
+            
+            if (users.find(user => user.username === username)) {
+                errorDiv.textContent = 'Tên đăng nhập đã tồn tại';
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                username,
+                password, // In real app, this should be hashed
+                email,
+                fullName,
+                balance: 0,
+                transactions: []
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('uniMaterialsUsers', JSON.stringify(users));
+            
+            errorDiv.textContent = 'Đăng ký thành công! Vui lòng đăng nhập.';
+            document.getElementById('registerForm').classList.remove('active');
+            document.getElementById('loginForm').classList.add('active');
+            document.querySelector('.auth-tab[data-tab="login"]').classList.add('active');
+            document.querySelector('.auth-tab[data-tab="register"]').classList.remove('active');
+            
+            // Clear form
+            document.getElementById('registerUsername').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerFullName').value = '';
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            errorDiv.textContent = '';
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                showUserInterface();
+                showSection('home');
+            } else {
+                errorDiv.textContent = 'Tên đăng nhập hoặc mật khẩu không đúng';
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            hideUserInterface();
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            showSection('home');
+        }
+
+        function showUserInterface() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('userInfo').classList.add('active');
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('registerBtn').style.display = 'none';
+            
+            document.getElementById('userDisplayName').textContent = currentUser.fullName;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            updateBalanceDisplay();
+        }
+
+        function hideUserInterface() {
+            document.getElementById('userInfo').classList.remove('active');
+            document.getElementById('loginBtn').style.display = 'inline-block';
+            document.getElementById('registerBtn').style.display = 'inline-block';
+        }
+
+        function updateBalanceDisplay() {
+            document.getElementById('balanceAmount').textContent = currentUser.balance.toLocaleString() + ' VNĐ';
+        }
+
+        // Categories and Subjects
+        function loadCategories() {
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    showSubjects(category);
+                });
+            });
+        }
+
+        function showSubjects(category) {
+            document.getElementById('categoriesSection').style.display = 'none';
+            document.getElementById('subjectsContainer').classList.add('active');
+            
+            const categoryTitles = {
+                'philosophy': 'Triết học',
+                'economics': 'Kinh tế',
+                'science': 'Khoa học',
+                'engineering': 'Kỹ thuật'
+            };
+            
+            document.getElementById('subjectsTitle').textContent = `Môn học: ${categoryTitles[category]}`;
+            
+            const subjectsGrid = document.getElementById('subjectsGrid');
+            subjectsGrid.innerHTML = '';
+            
+            // Filter subjects by category
+            const categorySubjects = subjects.filter(subject => subject.category === category);
+            
+            if (categorySubjects.length === 0) {
+                subjectsGrid.innerHTML = '<p>Chưa có môn học nào trong danh mục này.</p>';
+                return;
+            }
+            
+            categorySubjects.forEach(subject => {
+                const subjectCard = document.createElement('div');
+                subjectCard.className = 'subject-card';
+                subjectCard.innerHTML = `
+                    <div class="subject-header">
+                        <div class="subject-name">${subject.name}</div>
+                        <div class="subject-price">${subject.price.toLocaleString()} VNĐ</div>
+                    </div>
+                    <div class="subject-body">
+                        <p class="subject-description">${subject.description}</p>
+                        <div class="subject-seller">
+                            <span>Người bán: ${subject.seller}</span>
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="showPurchaseModal(${subject.id})">Mua ngay</button>
+                    </div>
+                `;
+                subjectsGrid.appendChild(subjectCard);
+            });
+        }
+
+        function backToCategories() {
+            document.getElementById('subjectsContainer').classList.remove('active');
+            document.getElementById('categoriesSection').style.display = 'block';
+        }
+
+        // Document selling
+        function submitDocument() {
+            if (!currentUser) {
+                alert('Vui lòng đăng nhập để đăng bán tài liệu!');
+                return;
+            }
+            
+            const subject = document.getElementById('docSubject').value;
+            const title = document.getElementById('docTitle').value;
+            const description = document.getElementById('docDescription').value;
+            const price = parseInt(document.getElementById('docPrice').value);
+            const file = document.getElementById('docFile').files[0];
+            const errorDiv = document.getElementById('sellError');
+            
+            errorDiv.textContent = '';
+            
+            // Validation
+            if (!subject || !title || !description || !price || !file) {
+                errorDiv.textContent = 'Vui lòng điền đầy đủ thông tin';
+                return;
+            }
+            
+            if (price < 1000) {
+                errorDiv.textContent = 'Giá bán phải từ 1,000 VNĐ trở lên';
+                return;
+            }
+            
+            // Create new document
+            const newDoc = {
+                id: documents.length + 1,
+                subject,
+                title,
+                description,
+                price,
+                seller: currentUser.username,
+                fileName: file.name,
+                uploadDate: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            documents.push(newDoc);
+            localStorage.setItem('uniMaterialsDocuments', JSON.stringify(documents));
+            
+            // Clear form
+            document.getElementById('docSubject').value = '';
+            document.getElementById('docTitle').value = '';
+            document.getElementById('docDescription').value = '';
+            document.getElementById('docPrice').value = '';
+            document.getElementById('docFile').value = '';
+            
+            errorDiv.textContent = 'Đăng tài liệu thành công! Tài liệu của bạn đang chờ được duyệt.';
+        }
+
+        // Payment and QR Code
+        function showDepositModal() {
+            document.getElementById('depositModal').classList.add('active');
+            document.getElementById('depositAmount').value = '';
+            document.getElementById('depositQR').classList.add('hidden');
+            document.getElementById('depositError').textContent = '';
+        }
+
+        function closeDepositModal() {
+            document.getElementById('depositModal').classList.remove('active');
+        }
+
+        function generateDepositQR() {
+            const amount = parseInt(document.getElementById('depositAmount').value);
+            const errorDiv = document.getElementById('depositError');
+            
+            errorDiv.textContent = '';
+            
+            if (isNaN(amount) || amount <= 0) {
+                errorDiv.textContent = 'Vui lòng nhập số tiền hợp lệ';
+                return;
+            }
+            
+            const bank = "ACB";
+            const account = "34979417";
+            const description = `Nap tien cho ${currentUser.username} - UniMaterials`;
+            
+            const qrUrl = `https://img.vietqr.io/image/${bank}-${account}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(description)}`;
+            
+            document.getElementById('qrImage').src = qrUrl;
+            document.getElementById('depositQR').classList.remove('hidden');
+        }
+
+        function simulateDeposit() {
+            const amount = parseInt(document.getElementById('depositAmount').value);
+            
+            // Update user balance
+            currentUser.balance += amount;
+            currentUser.transactions.push({
+                type: 'deposit',
+                amount: amount,
+                date: new Date().toISOString(),
+                description: 'Nạp tiền vào tài khoản'
+            });
+            
+            // Update user in storage
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                localStorage.setItem('uniMaterialsUsers', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+            
+            updateBalanceDisplay();
+            document.getElementById('depositQR').innerHTML += `
+                <div class="success mt-1">
+                    <strong>Đã nạp thành công ${amount.toLocaleString()} VNĐ vào tài khoản!</strong>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                closeDepositModal();
+            }, 2000);
+        }
+
+        function showPurchaseModal(subjectId) {
+            if (!currentUser) {
+                alert('Vui lòng đăng nhập để mua tài liệu!');
+                return;
+            }
+            
+            const subject = subjects.find(s => s.id === subjectId);
+            if (!subject) return;
+            
+            document.getElementById('purchaseInfo').innerHTML = `
+                <p><strong>Tài liệu:</strong> ${subject.name}</p>
+                <p><strong>Giá:</strong> ${subject.price.toLocaleString()} VNĐ</p>
+                <p><strong>Mô tả:</strong> ${subject.description}</p>
+                <p><strong>Người bán:</strong> ${subject.seller}</p>
+            `;
+            
+            document.getElementById('purchaseModal').classList.add('active');
+            document.getElementById('purchaseModal').setAttribute('data-subject-id', subjectId);
+        }
+
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').classList.remove('active');
+        }
+
+        function confirmPurchase() {
+            const subjectId = parseInt(document.getElementById('purchaseModal').getAttribute('data-subject-id'));
+            const subject = subjects.find(s => s.id === subjectId);
+            
+            if (!subject) return;
+            
+            if (currentUser.balance < subject.price) {
+                alert('Số dư không đủ để mua tài liệu này!');
+                closePurchaseModal();
+                return;
+            }
+            
+            // Process payment
+            currentUser.balance -= subject.price;
+            
+            // Calculate commission (10%)
+            const commission = subject.price * 0.1;
+            const sellerEarnings = subject.price - commission;
+            
+            // Update seller's balance (in a real app, this would be done on the backend)
+            const seller = users.find(u => u.username === subject.seller);
+            if (seller) {
+                seller.balance += sellerEarnings;
+                seller.transactions.push({
+                    type: 'sale',
+                    amount: sellerEarnings,
+                    date: new Date().toISOString(),
+                    description: `Bán tài liệu ${subject.name} (đã trừ ${commission.toLocaleString()} VNĐ phí dịch vụ)`
+                });
+            }
+            
+            // Update transactions
+            currentUser.transactions.push({
+                type: 'purchase',
+                amount: subject.price,
+                date: new Date().toISOString(),
+                description: `Mua tài liệu ${subject.name}`
+            });
+            
+            // Update users in storage
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+            }
+            
+            if (seller) {
+                const sellerIndex = users.findIndex(u => u.username === subject.seller);
+                if (sellerIndex !== -1) {
+                    users[sellerIndex] = seller;
+                }
+            }
+            
+            localStorage.setItem('uniMaterialsUsers', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            updateBalanceDisplay();
+            
+            alert(`Mua tài liệu "${subject.name}" thành công! Tài liệu đã được thêm vào thư viện của bạn.`);
+            closePurchaseModal();
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const depositModal = document.getElementById('depositModal');
+            const purchaseModal = document.getElementById('purchaseModal');
+            
+            if (event.target === depositModal) {
+                closeDepositModal();
+            }
+            
+            if (event.target === purchaseModal) {
+                closePurchaseModal();
+            }
+        }
+    </script>
+</body>
+</html>
